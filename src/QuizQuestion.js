@@ -2,10 +2,21 @@ import React, { Component } from 'react'
 import QuizQuestionButton from './QuizQuestionButton.js'
 
 class QuizQuestion extends Component {
+  handleClick(buttonText){
+    console.log("buttonText QuizQuestion")
+    if(buttonText === this.props.quiz_question.answer){
+      this.props.showNextQuestionHandler()
+      console.log("Answer correct")
+    }
+    console.log("Answer is not correct")
+  }
     render()
     {
         return(
         <main>
+             <section>
+              <p>{this.props.quiz_question.answer}</p>
+            </section>
             <section>
               <p>{this.props.quiz_question.instruction_text}</p>
             </section>
@@ -14,7 +25,10 @@ class QuizQuestion extends Component {
                 <li>{this.props.quiz_question.answer_options[0]}</li>
               </ul> */}
               <ul>
-                <QuizQuestionButton button_text={this.props.quiz_question.answer_options[0]} />
+                {this.props.quiz_question.answer_options.map((answer_option, index) => {
+                  return <QuizQuestionButton key={index} button_text={answer_option} 
+                  clickHandler={this.handleClick.bind(this)}/>
+                })}         
               </ul>
             </section>
           </main>
